@@ -2,27 +2,29 @@ package system.userService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import system.userData.UserDao;
 import system.userData.UserModel;
+import system.userData.userDao;
+
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserDao userDAO;
+    private userDao userDAO;
 
     public void addUser(UserModel userModel) {
-        userDAO.updateDatabase(userModel);
+        userDAO.save(userModel);
     }
 
+    @Transactional
     public void deleteUser(UserModel userModel) {
-        if (userDAO.deliteUser(userModel))
-            return;
-        else
-            System.out.println("User wasn't found");
+        userDAO.delete(userModel);
     }
 
     public UserModel findUser(long id) {
-        return userDAO.findUser(id);
+        Optional<UserModel> optionalUser = userDAO.findById(id);
+        return optionalUser.orElse(null);
     }
 }

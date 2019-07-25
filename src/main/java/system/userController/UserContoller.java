@@ -17,7 +17,19 @@ public class UserContoller {
     @Autowired
     private UserService userService;
 
-  // @RequestMapping(value = "/add", method = RequestMethod.GET)
+   @RequestMapping(value = "/main", method = RequestMethod.GET)
+   public ModelAndView mainPage(){
+       ModelAndView modelAndView = new ModelAndView();
+       modelAndView.addObject("mainPage", new UserModel());
+       modelAndView.setViewName("index");
+       return modelAndView;
+   }
+
+   @RequestMapping(value = "/mainShow", method = RequestMethod.POST)
+   public @ResponseBody String str(@ModelAttribute("mainPage")UserModel userModel){
+       System.out.println("This is main page");
+       return "Hello";
+   }
 
     @RequestMapping(value = "/check", method = RequestMethod.GET)
     public ModelAndView view(){
