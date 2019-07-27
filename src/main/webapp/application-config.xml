@@ -3,12 +3,18 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jdbc="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <mvc:annotation-driven/>
     <context:component-scan base-package="system"/>
 
     <mvc:view-controller path="/" view-name="main"/>
+
+    <bean id="emf1" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <jpa:repositories base-package="system" entity-manager-factory-ref="emf1"/>
 
     <bean id="resolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/page/"/>
@@ -18,10 +24,12 @@
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="org.h2.Driver"/>
         <property name="url" value="jdbc:h2:mem:default"/>
-        <property name="username" value="sa"/>
+        <property name="username" value=""/>
         <property name="password" value=""/>
     </bean>
 
-    <b
+    <bean name="userModel" class="system.userData.UserModel"/>
+    <bean name="userService" class="system.userService.UserService"/>
+    <bean name="userController" class="system.userController.UserController"/>
 
 </beans>

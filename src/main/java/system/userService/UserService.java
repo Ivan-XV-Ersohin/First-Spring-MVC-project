@@ -2,8 +2,8 @@ package system.userService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import system.userData.UserDao;
 import system.userData.UserModel;
-import system.userData.userDao;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -12,7 +12,7 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    private userDao userDAO;
+    private UserDao userDAO;
 
     public void addUser(UserModel userModel) {
         userDAO.save(userModel);
@@ -27,4 +27,9 @@ public class UserService {
         Optional<UserModel> optionalUser = userDAO.findById(id);
         return optionalUser.orElse(null);
     }
+
+    public Iterable<UserModel> showAllUsers(){
+        return userDAO.findAll();
+    }
 }
+
